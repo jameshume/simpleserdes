@@ -27,15 +27,6 @@ bool serialise(Serdes& writer, T& object) {
         object.serialisable_members());
 }
 
-template <typename Reader, typename T>
-constexpr bool bytes_required(Serdes& writer, T& object) {
-    return std::apply(
-        [&](const auto&... fields) {
-            return (sizeof(fields) + ...);
-        },
-        object.serialisable_members());
-}
-
 
 struct SerdesBufferReader {
     SerdesReader(std::span<const uint8_t> _buffer_view) : buffer_view(_buffer_view) {}
